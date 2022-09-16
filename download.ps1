@@ -5,7 +5,7 @@ $Reg2 = [regex]'https?:\/\/.*\.\w+'
 $Reg3 = [regex]'([^/]+)?\.(\w+)$'
 
 [System.Collections.ArrayList]$Lines = @()
-new-item "./packs" -Type Directory
+new-item "./packs" -Type Directory -Force | Out-Null
 
 foreach ($line in Get-Content $Source_file) {
 
@@ -15,7 +15,7 @@ foreach ($line in Get-Content $Source_file) {
         $Lines.Add($url) | Out-Null
     }
 }
-# echo $Lines
+echo "$($Lines.Count) packages"
 foreach ($url in $Lines) {
     $File_name = $url | Select-String $Reg3 -AllMatches | ForEach-Object { $_.Matches.Value }
     # echo $File_name
